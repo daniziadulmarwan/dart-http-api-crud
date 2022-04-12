@@ -13,4 +13,13 @@ class UserRepository {
     final userData = User.fromJson(jsonObject['data']);
     return userData;
   }
+
+  Future<List<User>> fetchAll() async {
+    final result =
+        await http.get(Uri.parse('https://reqres.in/api/users?page=1'));
+    final object = jsonDecode(result.body);
+    List data = object['data'];
+    var it = data.map((e) => User.fromJson(e)).toList();
+    return it;
+  }
 }
